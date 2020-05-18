@@ -53,3 +53,9 @@ def normalize():
 def draw_plot_dict():
     year = request.data.decode('utf8')
     return text.plot_dict_size(year)
+
+
+@flask_app.route('/draw_freq', methods=['POST'])
+def draw_freq():
+    year = request.data.decode('utf8')
+    return text.plot_freq_table(year)

@@ -2,10 +2,12 @@ from multiprocessing import Pool
 from multiprocessing import cpu_count
 from functools import lru_cache
 import re
+from collections import Counter
 
 import matplotlib.pyplot as plt
 import pymorphy2
 from nltk.corpus import stopwords
+import seaborn as sns
 
 stop_words = stopwords.words('russian')
 morph = pymorphy2.MorphAnalyzer()
@@ -97,4 +99,33 @@ def plot_dict_size(year):
 
     fname = f'app/static/images/dict{year}.png'
     fig.savefig(fname, dpi=300)
+    return fname
+
+
+def plot_freq_table(year):
+    """
+    Построить график самых частотных слов в отчете
+
+    :param year: Год отчета
+    :type year: str/int
+
+    :return: График
+    :rtype: matplotlib.pyplot.figure
+    """
+
+    counter = Counter()
+    fname = f'app/static/data/norm/CBR_report{year}_norm.txt'
+    with open(fname, 'r', encoding='utf8') as f:
+        for i, line in enumerate(f, start=1):
+            counter.update(line.split())
+    vals = dict(counter.most_common(25))
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    sns.barplot(x=list(vals.keys()), y=list(vals.values()), ax=ax)
+    plt.xticks(rotation='vertical')
+    ax.set_title(f'Частота встречаемости слов в отчете {year} года')
+    ax.set_ylabel('Количество вхождений')
+    plt.tight_layout()
+    fname = f'app/static/images/freq{year}.png'
+    fig.savefig(fname)
     return fname
