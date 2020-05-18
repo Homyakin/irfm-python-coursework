@@ -1,4 +1,6 @@
-from app import app
+from app import flask_app
+from app import views
+
 
 if __name__ == "__main__":
-    app.run()
+    flask_app.run()

@@ -1,3 +1,3 @@
 from flask import Flask
 
-app = Flask(__name__)
+flask_app = Flask(__name__)
