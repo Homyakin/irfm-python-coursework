@@ -1,6 +1,7 @@
-from flask import render_template
+from flask import render_template, jsonify
 from flask import request
 from app.utils import web
+from app.utils import pdf
 from app import flask_app
 import os
 
@@ -31,3 +32,10 @@ def download_report():
                            norm_exists=norm_exists,
                            freq_exists=freq_exists,
                            plot_exists=plot_exists)
+
+
+@flask_app.route('/convert', methods=['POST'])
+def convert_to_txt():
+    year = request.data.decode('utf8')
+    pdf.get_txt(year)
+    return jsonify({"success": True})
