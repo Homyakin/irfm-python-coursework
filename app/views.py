@@ -47,3 +47,9 @@ def normalize():
     year = request.data.decode('utf8')
     text.normalize(year)
     return jsonify({"success": True})
+
+
+@flask_app.route('/draw_plot_dict', methods=['POST'])
+def draw_plot_dict():
+    year = request.data.decode('utf8')
+    return text.plot_dict_size(year)

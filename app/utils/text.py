@@ -3,6 +3,7 @@ from multiprocessing import cpu_count
 from functools import lru_cache
 import re
 
+import matplotlib.pyplot as plt
 import pymorphy2
 from nltk.corpus import stopwords
 
@@ -63,3 +64,37 @@ def normalize_word(word):
     """
 
     return morph.normal_forms(word)[0]
+
+
+def plot_dict_size(year):
+    """
+    Построить график зависимости количества слов в отчете от размера словаря
+
+    :param year: Год отчета
+    :type year: str/int
+
+    :return: График
+    :rtype: matplotlib.pyplot.figure
+    """
+
+    fname = f'app/static/data/norm/CBR_report{year}_norm.txt'
+    words = set()
+    sizes = []
+    num_words = 0
+    with open(fname, 'r', encoding='utf8') as f:
+        for line in f:
+            for word in line.split():
+                words.add(word)
+                sizes.append(len(words))
+                num_words += 1
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.plot(range(num_words), sizes)
+    ax.set_title('График зависимости количества слов в тексте от размера словаря')
+    ax.set_xlabel('Количество слов в тексте')
+    ax.set_ylabel('Размер словаря')
+    plt.tight_layout()
+
+    fname = f'app/static/images/dict{year}.png'
+    fig.savefig(fname, dpi=300)
+    return fname

@@ -1,5 +1,6 @@
 venv/
 .idea/
 app/static/data
+app/static/images
 app/utils/__pycache__
 app/__pycache__

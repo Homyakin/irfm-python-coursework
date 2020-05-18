@@ -9,3 +9,4 @@ beautifulsoup4~=4.9.1
 pymorphy2~=0.8
 pdfminer.six==20200517
 nltk~=3.5
+matplotlib~=3.2.1
