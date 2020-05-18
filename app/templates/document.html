@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ year }} report</title>
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <script>
         function updateTextInput(val) {
           document.getElementById('sliderValue').value=val;

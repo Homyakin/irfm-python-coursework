@@ -3,6 +3,7 @@ from flask import request
 from app.utils import web
 from app.utils import pdf
 from app.utils import text
+from app.utils import search_text
 from app import flask_app
 import os
 
@@ -59,3 +60,25 @@ def draw_plot_dict():
 def draw_freq():
     year = request.data.decode('utf8')
     return text.plot_freq_table(year)
+
+
+@flask_app.route('/search', methods=['POST'])
+def search():
+    req = request.get_json()
+    pattern = req['query']
+    year = req['year']
+    metric = req['metric']
+    n_pad_words = int(req['n_pad'])
+    exact_search = req['exact_search']
+    result = search_text.file_search(pattern, year, metric, n_pad_words, exact_search)
+    success = result is not None
+    return_json = {"success": success}
+    if success:
+        left = ' '.join(result.split()[:n_pad_words])
+        return_json['left'] = left
+        middle = ' '.join(result.split()[n_pad_words:-n_pad_words])
+        return_json['middle'] = middle
+        right = ' '.join(result.split()[-n_pad_words:])
+        return_json['right'] = right
+
+    return jsonify(return_json)

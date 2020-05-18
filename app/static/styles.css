@@ -1,0 +1,21 @@
+embed#document_pdf {
+    vertical-align: top;
+    display: block;
+}
+
+embed#document_txt {
+    vertical-align: top;
+    display: none;
+}
+
+.column {
+  float: left;
+  width: 44%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}

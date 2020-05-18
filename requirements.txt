@@ -11,3 +11,5 @@ pdfminer.six==20200517
 nltk~=3.5
 matplotlib~=3.2.1
 seaborn~=0.10.1
+python-Levenshtein==0.12.0
+lxml==4.5.0
